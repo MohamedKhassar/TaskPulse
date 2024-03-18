@@ -19,7 +19,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        Poppins: "Poppins"
+        body: ['Madimi One'],
+        Poppins: ["Poppins"]
       },
       keyframes: {
         "accordion-down": {
