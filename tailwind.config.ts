@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        Poppins: "Poppins"
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
