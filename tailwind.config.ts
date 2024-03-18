@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        body: ['Madimi One']
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

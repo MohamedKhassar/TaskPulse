@@ -21,12 +21,11 @@ const NavBar = () => {
     }
     const notification: [] = [
     ]
-    console.log(notification.length)
     return (
-        <div className='flex items-center justify-center lg:justify-between py-1 px-14 bg-[#2B2E43] text-[#EEEEEE] '>
+        <div className='flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE] '>
             <div className='flex gap-x-4 items-center'>
                 <Image src={logo} alt="" className='w-14' />
-                <h1 className='text-xl'>TaskPulse</h1>
+                <h1 className='text-2xl font-body'><span className='font-bold text-2xl  text-[#7A54CC]'>Task</span>Pulse</h1>
             </div>
             <div className='flex items-center gap-x-11'>
                 {/* ------------------------when user login---------------------------------------- */}
@@ -45,7 +44,7 @@ const NavBar = () => {
                     <DropdownMenuTrigger className='outline-none'><div className='bg-gray-500 rounded-full p-2 cursor-pointer border-2 hover:border-[2.5px] hover:border-slate-400 duration-300'>
                         {!user.image ? <User color='white' /> : user.image}
                     </div></DropdownMenuTrigger>
-                    <DropdownMenuContent className='bg-[#191C2E] text-white border-gray-500'>
+                    <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>Profile</DropdownMenuItem>
