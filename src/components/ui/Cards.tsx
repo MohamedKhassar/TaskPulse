@@ -1,16 +1,19 @@
-import { Pen, Star, Trash, User } from 'lucide-react'
+import { Pen, Star, Trash, User, UserPlus } from 'lucide-react'
 import React from 'react'
 import { AnimatedTooltip } from './animated-tooltip'
 
-const Cards = () => {
-    const task = {
-        id: 1,
-        title: "Task 1",
-        description: "Description 1",
-        completed: false,
-        created_at: "",
-        updated_at: "2021-01-01 00:00:00"
-    }
+type Task = {
+    id: number,
+    title: string,
+    description: string,
+    completed: boolean,
+    created_at: string,
+    deadline: string,
+    stared: boolean,
+    priority: string
+}
+
+const Cards = ({ task }: { task: Task }) => {
     const people = [
         {
             id: 1,
@@ -59,13 +62,13 @@ const Cards = () => {
         <div className='flex justify-between p-5 w-[416px] bg-[#1A1C1E] border-l-[#23B7E5]/40 h-[200px] border-l-[7px] rounded-lg'>
             <div className='flex flex-col gap-y-6'>
                 <div className='flex gap-x-2 items-center'>
-                    <Star className='fill-white/50 border-none' strokeWidth={0.2} size={15} />
-                    <h1 className='font-semibold text-[13px] font-Poppins text-white/70'>New Project Blueprint</h1>
+                    <Star className={`${task.stared ? "fill-yellow-500" : "fill-white/50"} border-none`} strokeWidth={0.2} size={15} />
+                    <h1 className='font-semibold text-[13px] font-Poppins text-white/70'>{task.title}</h1>
                 </div>
                 <div>
                     <ul className='flex flex-col gap-y-6 font-normal text-[13px] font-Poppins text-white/70'>
-                        <li>Assigned On : <span className='text-[12px] text-white/50'>13,Nov 2022</span></li>
-                        <li>Target Date : <span className='text-[12px] text-white/50'>20,Nov 2022</span></li>
+                        <li>Assigned On : <span className='text-[12px] text-white/50'>{task.created_at}</span></li>
+                        <li>Target Date : <span className='text-[12px] text-white/50'>{task.deadline}</span></li>
                         <li className='flex items-center gap-x-1'>Assigned To :
 
                             {/* <div className='flex items-center'>
@@ -73,7 +76,9 @@ const Cards = () => {
                                 <User className='-translate-x-1 hover:-translate-y-[2px] duration-500 w-[28px] h-[28px] bg-white rounded-full p-1' />
                                 <User className='-translate-x-2 hover:-translate-y-[2px] duration-500 w-[28px] h-[28px] bg-black rounded-full p-1' />
                             </div> */}
-                            <AnimatedTooltip items={people.slice(1, 3)} />
+                            {people.length ?
+                                <AnimatedTooltip items={people.slice(1, 3)} /> : <UserPlus size={23} color='black' className='hover:bg-white/30 duration-300 cursor-pointer bg-white/50 rounded-full p-1' />
+                            }
                         </li>
                     </ul>
                 </div>
@@ -85,7 +90,7 @@ const Cards = () => {
                 </div>
                 <div className='flex justify-end'>
 
-                    <h1 className='bg-[#F5B849]/10 hover:bg-[#F5B849]/40 duration-300 text-[#F5B849] w-[36.25px] p-1 text-center font-semibold rounded-[4px] text-[9.8px]'>High</h1>
+                    <h1 className={`${task.priority == "medium" ? "bg-[#F5B849]/10 hover:bg-[#F5B849]/40 text-[#F5B849]" : task.priority == "high" ? "bg-[#E6533C]/10 hover:bg-[#E6533C]/40 text-[#E6533C]" : "bg-[#26BF94]/10 hover:bg-[#26BF94]/40 text-[#26BF94]"}  w-fit py-1 px-2 text-center font-semibold rounded-[4px] text-[11px] duration-300 capitalize`}>{task.priority}</h1>
                 </div>
             </div>
         </div>
