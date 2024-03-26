@@ -22,7 +22,7 @@ const NavBar = () => {
     const notification: [] = [
     ]
     return (
-        <div className='flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE] '>
+        <div className='flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE]'>
             <div className='flex gap-x-4 items-center'>
                 <Image src={logo} alt="" className='w-14' />
                 <h1 className='text-2xl font-body'><span className='font-bold text-2xl  text-[#7A54CC]'>Task</span>Pulse</h1>
