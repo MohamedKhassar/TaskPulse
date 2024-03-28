@@ -1,97 +1,22 @@
 "use client"
-import Board from '@/components/ui/Board'
-import Cards from '@/components/ui/Cards'
-import { data } from '@/db/data'
-import { DndContext, DragEndEvent, DragMoveEvent, DragStartEvent, KeyboardSensor, PointerSensor, UniqueIdentifier, closestCorners, useSensor, useSensors } from '@dnd-kit/core'
-import { SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import React, { useState } from 'react'
-
+import Image from 'next/image'
+import React from 'react'
+import bgHome from "../../public/images/bgHome.png"
+import bg from "../../public/images/bg.jpg"
+import { useRouter } from 'next/navigation'
 export default function page() {
-  const { boards, tasks, columns } = data
-  const [activeId, setActiveId] = useState<UniqueIdentifier>()
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates
-    })
-  )
-
-  const handelDragStart = (e: DragStartEvent) => {
-    const { active } = e
-    const { id } = active
-    setActiveId(id)
-  }
-
-  const handelDragMove = (e: DragMoveEvent) => {
-    const { active, over } = e
-    if (active.id.toString().includes("item") &&
-      over?.id.toString().includes("items") &&
-      active &&
-      over &&
-      active.id !== over.id
-    ) {
-
-    }
-  }
-
-  const handelDragEnd = (e: DragEndEvent) => {
-
-  }
+  const router = useRouter()
   return (
-    <div className='flex justify-center items-center h-screen'>
-      <div className='flex gap-8 justify-center items-start'>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCorners}
-          onDragStart={handelDragStart}
-          onDragMove={handelDragMove}
-          onDragEnd={handelDragEnd}
-        >
-          <SortableContext
-            items={boards.map(board => board._id)}
-          >
-            {boards.map((board, i) =>
-              <Board column={columns.find(column => column.board == board._id)} key={i} board={board}>
-                {columns.filter(column => column.board == board._id).map(column => (
-                  tasks.filter(task => task.status.toLowerCase() == column.columnName.toLowerCase()).map(task => (
-                    <SortableContext
-                      items={tasks.filter(task => task.column == column._id).map(task => task._id)}
-                    >
-                      <Cards key={task._id} task={task} />
-                    </SortableContext>
-                  ))
-                ))}
-              </Board>
-            )}
-          </SortableContext>
-          {/* <Board title='ToDo'>
-             <SortableContext
-               items={toDo.map(task => task._id)}
-             >
-               {toDo.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board>
-           <Board title='doing'>
-             <SortableContext
-               items={doing.map(task => task._id)}
-             >
-               {doing.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board>
-           <Board title='done'>
-             <SortableContext
-               items={done.map(task => task._id)}
-             >
-               {done.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board> */}
-        </DndContext>
+    <div className='flex justify-center m-8'
+    >
+      <div className='flex justify-center items-center mx-24'>
+        <div className='flex flex-col gap-y-5'>
+          <h1 className='font-body text-6xl text-left'><span className='font-bold text-[#7A54CC]'>Task</span>Pulse</h1>
+          <p className='text-white w-3/4'>
+            Task Management Platform Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, officiis, tempora ipsum minima accusantium est quo soluta iusto quasi cumque beatae, repellendus impedit nam tempore recusandae consectetur corrupti architecto id!</p>
+          <button className='p-3 capitalize text-white bg-[#7A54CC] duration-300 hover:bg-[#5127aa] rounded-lg w-fit' onClick={() => router.push("/project")}>learn more ...</button>
+        </div>
+        <Image src={bgHome} className='w-[500px] h-[500px] object-contain' alt='' />
       </div>
     </div>
   )
