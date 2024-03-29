@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "../components/NavBar";
-// import logo from "../../public/images/logo.png"
+import { AuthProvider } from "@/Provider/authProviders"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className + " bg-[#252729]"}>
-        <NavBar />
-        {children}
+        <AuthProvider>
+          <NavBar />
+          {children}
+        </AuthProvider>
 
       </body>
     </html>

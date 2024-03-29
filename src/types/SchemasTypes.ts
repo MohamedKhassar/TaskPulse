@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 export type Project = {
-    ProjectTitle: string
+    title: string
     userId: mongoose.Schema.Types.ObjectId
     column: string[],
     tasks: Task[] | undefined,

@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 
 const projectSchema = new mongoose.Schema<Project>({
-    ProjectTitle: {
+    title: {
         type: String,
         required: true
     },
@@ -21,6 +21,7 @@ const projectSchema = new mongoose.Schema<Project>({
     members: [String],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 })
 
