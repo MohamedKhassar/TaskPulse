@@ -3,17 +3,19 @@ import User from "@/models/user";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { NextAuthOptions } from "next-auth";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
+      type: "credentials",
       credentials: {},
-      async authorize(credentials: {
-        email: string,
-        password: string
-      }, req) {
-        const { email, password } = credentials;
+      async authorize(credentials, req) {
+        const { email, password } = credentials as {
+          email: string,
+          password: string,
+        };
 
         try {
           const user = await User.findOne({ email });
