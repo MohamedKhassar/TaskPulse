@@ -11,52 +11,62 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { signOut, useSession } from 'next-auth/react'
+import { usePathname, useRouter } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
 
 const NavBar = () => {
-    const user = {
-        id: 1,
-        name: 'Mohamed Khassar',
-        image: ""
-    }
+    const { data: user } = useSession()
+    const router = useRouter()
+    const pathname = usePathname()
+    const authRoutes = ["/login", "/register"]
     const notification: [] = [
     ]
     return (
-        <div className='flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE]'>
+        <div className={cn('flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE]',
+            authRoutes.includes(pathname) && 'hidden'
+        )}>
             <div className='flex gap-x-4 items-center'>
                 <Image src={logo} alt="" className='w-14' />
                 <h1 className='text-2xl font-body'><span className='font-bold text-2xl  text-[#7A54CC]'>Task</span>Pulse</h1>
             </div>
-            <div className='flex items-center gap-x-11'>
-                {/* ------------------------when user login---------------------------------------- */}
-                <DropdownMenu>
-                    <DropdownMenuTrigger className='outline-none'><BellRing className='hover:bg-gray-500 p-2 rounded-full rotate-45 duration-200' size={35} /></DropdownMenuTrigger>
-                    <DropdownMenuContent className='w-96 -translate-x-28 bg-[#191C2E] text-white border-gray-500'>
-                        {notification.length < 1 ? <DropdownMenuItem className='hover:bg-none capitalize'>There is no notification</DropdownMenuItem> :
-                            notification.map(n =>
-                                <DropdownMenuItem>{n}</DropdownMenuItem>
+            {user ?
+                <div className='flex items-center gap-x-11'>
 
-                            )}
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                    {/* ------------------------when user login---------------------------------------- */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className='outline-none'><BellRing className='hover:bg-gray-500 p-2 rounded-full rotate-45 duration-200' size={35} /></DropdownMenuTrigger>
+                        <DropdownMenuContent className='w-96 -translate-x-28 bg-[#191C2E] text-white border-gray-500'>
+                            {notification.length < 1 ? <DropdownMenuItem className='hover:bg-none capitalize'>There is no notification</DropdownMenuItem> :
+                                notification.map(n =>
+                                    <DropdownMenuItem>{n}</DropdownMenuItem>
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger className='outline-none'><div className='bg-gray-500 rounded-full p-2 cursor-pointer border-2 hover:border-[2.5px] hover:border-slate-400 duration-300'>
-                        {!user.image ? <User color='white' /> : user.image}
-                    </div></DropdownMenuTrigger>
-                    <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
-                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Projects</DropdownMenuItem>
-                        <DropdownMenuItem className='bg-red-600 text-red-950 capitalize hover:bg-slate-900'>logout</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                                )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
-                {/* ------------------------when user not login---------------------------------------- */}
-                {/* <button className='border border-white p-1 rounded-lg w-24 duration-300 hover:bg-white hover:text-[#31363F]'>Sign In</button> */}
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className='outline-none'><div className='bg-gray-500 rounded-full p-2 cursor-pointer border-2 hover:border-[2.5px] hover:border-slate-400 duration-300'>
+                            <User color='white' />
+                        </div></DropdownMenuTrigger>
+                        <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
+                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem>Projects</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => signOut()} className='bg-red-600 text-red-950 capitalize hover:bg-slate-900 cursor-pointer'>logout</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
 
-            </div>
+                </div>
+                :
+                <div className='flex gap-x-5 items-center'>
+                    {/* ------------------------when user not login---------------------------------------- */}
+                    <button onClick={() => router.push("/login")} className='capitalize hover:text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg w-20 duration-300 hover:bg-[#7A54CC] text-[#a27cf5]'>Sign In</button>
+                    <button onClick={() => router.push("/register")} className='capitalize text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg w-20 duration-300 hover:bg-transparent bg-[#7A54CC] hover:text-[#a27cf5]'>register</button>
+                </div>
+            }
         </div >
     )
 }
