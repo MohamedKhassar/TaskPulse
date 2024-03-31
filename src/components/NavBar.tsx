@@ -53,7 +53,7 @@ const NavBar = () => {
                         <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
                             <DropdownMenuItem>Projects</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => signOut()} className='bg-red-600 text-red-950 capitalize hover:bg-slate-900 cursor-pointer'>logout</DropdownMenuItem>
                         </DropdownMenuContent>
