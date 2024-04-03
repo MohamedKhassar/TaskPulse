@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 export type Project = {
+    _id: string,
     title: string
     userId: mongoose.Schema.Types.ObjectId
     column: string[],
@@ -9,6 +10,7 @@ export type Project = {
 }
 
 export type Task = {
+    _id: string,
     taskName: string,
     description: string | undefined,
     priority: TaskPriority,
@@ -31,4 +33,10 @@ export enum TaskStatus {
     Done = "Done"
 }
 
-export type 
+export type User = {
+    id: string,
+    name: string,
+    email: string,
+    image: string
+    password: string
+} 

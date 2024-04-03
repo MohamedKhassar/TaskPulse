@@ -8,6 +8,7 @@ import Image from "next/image";
 import logo from "../../public/images/logo.png"
 import { EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import GoogleAuth from "./ui/authComponents/GoogleAuth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -31,6 +32,7 @@ export default function LoginForm() {
 
       if (res?.error) {
         setError("Invalid Credentials");
+        setLoading(false)
         return;
       }
       router.replace("profile");
@@ -75,6 +77,9 @@ export default function LoginForm() {
           <button className={cn("bg-[#7A54CC]/50 hover:bg-[#7A54CC]/70 font-body text-xl rounded duration-300 text-[#2b165a] font-bold cursor-pointer px-6 py-2", loading && "cursor-not-allowed")} disabled={loading && true}>
             Login
           </button>
+          <div className="grid gap-x-3">
+            <GoogleAuth />
+          </div>
           {error && (
             <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
               {error}

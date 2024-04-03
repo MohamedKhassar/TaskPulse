@@ -1,8 +1,8 @@
 "use client"
 import Image from 'next/image'
-import React, { use } from 'react'
+import React, { useState } from 'react'
 import logo from "../../public/images/logo.png"
-import { BellRing, User } from 'lucide-react'
+import { BellRing, LoaderCircle, User } from 'lucide-react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -23,6 +23,8 @@ const NavBar = () => {
     const authRoutes = ["/login", "/register"]
     const notification: [] = [
     ]
+    const [loading, setLoading] = useState(false)
+
     return (
         <div className={cn('flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE]',
             authRoutes.includes(pathname) && 'hidden'
@@ -55,7 +57,7 @@ const NavBar = () => {
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
                             <DropdownMenuItem>Projects</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => signOut()} className='bg-red-600 text-red-950 capitalize hover:bg-slate-900 cursor-pointer'>logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => { setLoading(true); signOut() }} className='bg-red-600 text-red-950 capitalize hover:bg-slate-900 cursor-pointer'>logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
 
