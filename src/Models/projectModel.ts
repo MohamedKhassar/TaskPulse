@@ -8,10 +8,6 @@ const projectSchema = new mongoose.Schema<Project>({
         type: String,
         required: true
     },
-    column: {
-        type: [String],
-        default: ["ToDo", "Doing", "Doing"]
-    },
     tasks: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -21,6 +17,7 @@ const projectSchema = new mongoose.Schema<Project>({
     members: [String],
     userId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
     }
 })

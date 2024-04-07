@@ -8,7 +8,6 @@ import Image from "next/image";
 import logo from "../../public/images/logo.png"
 import { EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import GoogleAuth from "./ui/authComponents/GoogleAuth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -78,7 +77,6 @@ export default function LoginForm() {
             Login
           </button>
           <div className="grid gap-x-3">
-            <GoogleAuth />
           </div>
           {error && (
             <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">

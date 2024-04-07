@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 export { default } from 'next-auth/middleware';
 
 export function middleware(request: NextRequest) {
-    const protectedRoutes = ["/profile"];
+    const protectedRoutes = ["/profile", "/project"];
     const authRoutes = ["/login", "/register"];
     const publicRoutes = ["/about", "/"];
     const currentUser = request.cookies.get('next-auth.session-token')?.value

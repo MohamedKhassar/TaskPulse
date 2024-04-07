@@ -14,6 +14,7 @@ import {
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 
 const NavBar = () => {
@@ -31,7 +32,7 @@ const NavBar = () => {
         )}>
             <div className='flex gap-x-4 items-center'>
                 <Image src={logo} alt="" className='w-14' />
-                <h1 className='text-2xl font-body'><span className='font-bold text-2xl  text-[#7A54CC]'>Task</span>Pulse</h1>
+                <h1 className='text-2xl font-body'><Link href={"/"}><span className='font-bold text-2xl  text-[#7A54CC]'>Task</span>Pulse</Link></h1>
             </div>
             {user ?
                 <div className='flex items-center gap-x-11'>
@@ -49,14 +50,17 @@ const NavBar = () => {
                     </DropdownMenu>
 
                     <DropdownMenu>
-                        <DropdownMenuTrigger className='outline-none'><div className='bg-gray-500 rounded-full p-2 cursor-pointer border-2 hover:border-[2.5px] hover:border-slate-400 duration-300'>
-                            <User color='white' />
-                        </div></DropdownMenuTrigger>
+                        <DropdownMenuTrigger className='outline-none'>
+                            <Image src={user.user.image}
+                                width="100"
+                                height="100"
+                                className="rounded-full cursor-pointer w-14" alt='' />
+                        </DropdownMenuTrigger>
                         <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Projects</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => router.push('/project')}>Projects</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => { setLoading(true); signOut() }} className='bg-red-600 text-red-950 capitalize hover:bg-slate-900 cursor-pointer'>logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

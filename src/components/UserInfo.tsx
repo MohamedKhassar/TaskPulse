@@ -2,7 +2,7 @@
 import { Mail, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState } from "react";
 export default function UserInfo() {
   const { data: user } = useSession()
   const [isEdit, setIsEdit] = useState(false)
@@ -12,7 +12,6 @@ export default function UserInfo() {
   })
   return (
     <div className="flex justify-center items-center h-[90vh]">
-
       <div className="shadow-md shadow-[#7A54CC] px-5 pb-5 min-w rounded-lg border-t-4 border-[#7A54CC] flex flex-col">
         <div className="flex justify-center items-center m-5">
           {isEdit ?
@@ -29,7 +28,7 @@ export default function UserInfo() {
         <div className="flex flex-col gap-y-3">
           <div className="flex gap-x-3 items-center">
             <User color="#ffff" />
-            {isEdit ? <input type="text" className="bg-transparent outline-none border-b border-b-white p-1" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} /> :
+            {isEdit ? <input type="text" className="text-white bg-transparent outline-none border-b border-b-white p-1" value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} /> :
               <h1 className="text-xl font-bold font-body text-[#7A54CC]">{user?.user?.name}</h1>
             }
           </div>

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { EyeIcon, EyeOff, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signIn } from "next-auth/react";
-import GoogleAuth from "./ui/authComponents/GoogleAuth";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -120,8 +119,6 @@ export default function RegisterForm() {
           <button className="bg-[#7A54CC]/50 hover:bg-[#7A54CC]/70 font-body text-xl capitalize rounded duration-300 text-[#2b165a] font-bold cursor-pointer px-6 py-2">
             register
           </button>
-          <GoogleAuth />
-
           {error && (
             <div className="bg-red-500 text-white w-fit text-sm py-1 px-3 rounded-md mt-2">
               {error}
