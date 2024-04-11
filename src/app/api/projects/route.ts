@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import "@/lib/mongodb"
 import TaskModel from "@/Models/taskModel"
 import ProjectModel from "@/Models/projectModel"
-import { cookies } from "next/headers"
-import { JWTDecodeParams, decode, getToken } from "next-auth/jwt"
+import { getToken } from "next-auth/jwt"
 export const GET = async (req: NextRequest, params: { userId: string }) => {
     try {
         const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })

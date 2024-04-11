@@ -21,7 +21,7 @@ export default function page() {
             doloremque, fugiat illum magni minus nisi nulla numquam obcaecati placeat quia, repellat tempore
             voluptatum.
           </p>
-          <button onClick={() => router.push('/project')} className="mt-8 bg-blue-600 hover:bg-blue-400 rounded py-3 px-6 shadow-lg text-white">Back</button>
+          <button onClick={() => router.push('/project')} className="mt-8 bg-blue-600 hover:bg-blue-400 rounded py-3 px-6 shadow-lg text-white font-body">my project</button>
         </div>
       </div>
     </div>

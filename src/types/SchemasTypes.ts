@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 export type Project = {
     _id: string,
     title: string
-    userId: mongoose.Schema.Types.ObjectId
+    userId: User
     column: string[],
     tasks: Task[] | undefined,
     members: string[] | undefined
@@ -17,7 +17,7 @@ export type Task = {
     status: TaskStatus,
     created_at: Date,
     deadline: Date,
-    assignedTo: string,
+    assignedTo: User[],
     stared: boolean
 }
 

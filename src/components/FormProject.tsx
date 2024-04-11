@@ -65,7 +65,6 @@ const Form = ({ onCreate }: { onCreate?: MouseEventHandler }) => {
 
                 <button
                   className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 capitalize"
-                  onClick={onCreate}
                 >
                   create project
                 </button>

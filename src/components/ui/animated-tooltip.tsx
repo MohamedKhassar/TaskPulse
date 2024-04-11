@@ -8,18 +8,14 @@ import {
     useMotionValue,
     useSpring,
 } from "framer-motion";
+import { User } from "@/types/SchemasTypes";
 
 export const AnimatedTooltip = ({
     items,
 }: {
-    items: {
-        id: number;
-        name: string;
-        designation: string;
-        image: string;
-    }[];
+    items: User[];
 }) => {
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
     const springConfig = { stiffness: 100, damping: 5 };
     const x = useMotionValue(0); // going to set this value on mouse move
     // rotate the tooltip
@@ -73,7 +69,6 @@ export const AnimatedTooltip = ({
                                 <div className="font-bold text-white relative z-30 text-base">
                                     {item.name}
                                 </div>
-                                <div className="text-white text-xs">{item.designation}</div>
                             </motion.div>
                         )}
                     </AnimatePresence>

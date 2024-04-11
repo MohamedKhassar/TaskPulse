@@ -2,97 +2,102 @@
 import Board from '@/components/ui/Board'
 import Cards from '@/components/ui/Cards'
 import { data } from '@/db/data'
+import { cn } from '@/lib/utils'
+import { Project, TaskPriority, TaskStatus } from '@/types/SchemasTypes'
 import { DndContext, DragEndEvent, DragMoveEvent, DragStartEvent, KeyboardSensor, PointerSensor, UniqueIdentifier, closestCorners, useSensor, useSensors } from '@dnd-kit/core'
 import { SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import React, { useState } from 'react'
+import axios from 'axios'
+import { LoaderCircle } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 
-export default function page() {
-    const { boards, tasks, columns } = data
-    const [activeId, setActiveId] = useState<UniqueIdentifier>()
-    const sensors = useSensors(
-        useSensor(PointerSensor),
-        useSensor(KeyboardSensor, {
-            coordinateGetter: sortableKeyboardCoordinates
-        })
-    )
+export default function page({ params }: { params: { projectId: string } }) {
+  const [activeId, setActiveId] = useState<UniqueIdentifier>()
+  const [project, setProject] = useState<Project>()
 
-    const handelDragStart = (e: DragStartEvent) => {
-        const { active } = e
-        const { id } = active
-        setActiveId(id)
-    }
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  )
 
-    const handelDragMove = (e: DragMoveEvent) => {
-        const { active, over } = e
-        if (active.id.toString().includes("item") &&
-            over?.id.toString().includes("items") &&
-            active &&
-            over &&
-            active.id !== over.id
-        ) {
+  const handelDragStart = (e: DragStartEvent) => {
+    const { active } = e
+    const { id } = active
+    setActiveId(id)
+  }
 
-        }
-    }
-
-    const handelDragEnd = (e: DragEndEvent) => {
+  const handelDragMove = (e: DragMoveEvent) => {
+    const { active, over } = e
+    if (active.id.toString().includes("item") &&
+      over?.id.toString().includes("items") &&
+      active &&
+      over &&
+      active.id !== over.id
+    ) {
 
     }
-    return (
-        <div className='flex justify-center items-center h-screen'>
-            <div className='flex gap-8 justify-center items-start'>
-                <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCorners}
-                    onDragStart={handelDragStart}
-                    onDragMove={handelDragMove}
-                    onDragEnd={handelDragEnd}
+  }
+
+  const handelDragEnd = (e: DragEndEvent) => {
+
+  }
+  const fetchProject = async () => {
+    const res = await axios.get(`http://localhost:3000/api/projects/${params.projectId}`)
+    const data = res.data
+    setProject(data)
+  }
+  useEffect(() => {
+    fetchProject()
+  }, [])
+  return (
+    <div className='flex flex-col justify-center items-center h-[90vh]'>
+      <div className='h-1/6'>
+        <h1 className='text-6xl font-body font-bold text-[#7A54CC]'>{project?.title}</h1>
+      </div>
+      <div className='lg:flex lg:flex-row flex-col lg:gap-x-5 gap-y-5 justify-center items-start'>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCorners}
+          onDragStart={handelDragStart}
+          onDragMove={handelDragMove}
+          onDragEnd={handelDragEnd}
+        >
+          <SortableContext
+            items={[0, 1, 2]}
+          >
+            <Board projectId={params.projectId} column={TaskStatus.ToDo}>
+              {project?.tasks?.filter(task => task.status == TaskStatus.ToDo).map(task => (
+                <SortableContext
+                  items={project?.tasks?.filter(task => task.status == TaskStatus.ToDo).map(task => task._id) as (UniqueIdentifier | { id: UniqueIdentifier })[]}
                 >
-                    <SortableContext
-                        items={boards.map(board => board._id)}
-                    >
-                        {boards.map((board, i) =>
-                            <Board column={columns.find(column => column.board == board._id)} key={i} board={board}>
-                                {columns.filter(column => column.board == board._id).map(column => (
-                                    tasks.filter(task => task.status.toLowerCase() == column.columnName.toLowerCase()).map(task => (
-                                        <SortableContext
-                                            items={tasks.filter(task => task.column == column._id).map(task => task._id)}
-                                        >
-                                            <Cards key={task._id} task={task} />
-                                        </SortableContext>
-                                    ))
-                                ))}
-                            </Board>
-                        )}
-                    </SortableContext>
-                    {/* <Board title='ToDo'>
-             <SortableContext
-               items={toDo.map(task => task._id)}
-             >
-               {toDo.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board>
-           <Board title='doing'>
-             <SortableContext
-               items={doing.map(task => task._id)}
-             >
-               {doing.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board>
-           <Board title='done'>
-             <SortableContext
-               items={done.map(task => task._id)}
-             >
-               {done.map(task => (
-                 <Cards task={task} key={task._id} />
-               ))}
-             </SortableContext>
-           </Board> */}
-                </DndContext>
-            </div>
-        </div>
-    )
+                  <Cards projectId={project._id} key={task._id} task={task} />
+                </SortableContext>
+              ))}
+            </Board>
+            <Board projectId={params.projectId} column={TaskStatus.Doing}>
+              {project?.tasks?.filter(task => task.status == TaskStatus.Doing).map(task => (
+                <SortableContext
+                  items={project?.tasks?.filter(task => task.status == TaskStatus.ToDo).map(task => task._id) as (UniqueIdentifier | { id: UniqueIdentifier })[]}
+                >
+                  <Cards projectId={project._id} key={task._id} task={task} />
+                </SortableContext>
+              ))}
+
+            </Board>
+            <Board projectId={params.projectId} column={TaskStatus.Done}>
+              {project?.tasks?.filter(task => task.status == TaskStatus.Done).map(task => (
+                <SortableContext
+                  items={project?.tasks?.filter(task => task.status == TaskStatus.ToDo).map(task => task._id) as (UniqueIdentifier | { id: UniqueIdentifier })[]}
+                >
+                  <Cards projectId={project._id} key={task._id} task={task} />
+                </SortableContext>
+              ))}
+
+            </Board>
+          </SortableContext>
+        </DndContext>
+      </div>
+    </div>
+  )
 }

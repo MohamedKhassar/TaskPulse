@@ -28,9 +28,10 @@ const taskSchema = new mongoose.Schema<Task>({
         required: true,
         default: Date.now()
     },
-    assignedTo: {
-        type: String,
-    },
+    assignedTo: [{
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    }],
     stared: {
         type: Boolean,
         default: false

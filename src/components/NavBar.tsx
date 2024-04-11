@@ -27,7 +27,7 @@ const NavBar = () => {
     const [loading, setLoading] = useState(false)
 
     return (
-        <div className={cn('flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE]',
+        <div className={cn('relative top-0 flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE] mb-6',
             authRoutes.includes(pathname) && 'hidden'
         )}>
             <div className='flex gap-x-4 items-center'>
@@ -39,7 +39,7 @@ const NavBar = () => {
 
                     {/* ------------------------when user login---------------------------------------- */}
                     <DropdownMenu>
-                        <DropdownMenuTrigger className='outline-none'><BellRing className='hover:bg-gray-500 p-2 rounded-full rotate-45 duration-200' size={35} /></DropdownMenuTrigger>
+                        <DropdownMenuTrigger className='outline-none hidden lg:block'><BellRing className='hover:bg-gray-500 p-2 rounded-full rotate-45 duration-200' size={35} /></DropdownMenuTrigger>
                         <DropdownMenuContent className='w-96 -translate-x-28 bg-[#191C2E] text-white border-gray-500'>
                             {notification.length < 1 ? <DropdownMenuItem className='hover:bg-none capitalize'>There is no notification</DropdownMenuItem> :
                                 notification.map(n =>

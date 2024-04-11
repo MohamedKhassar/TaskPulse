@@ -41,7 +41,7 @@ export const data = {
         },
         {
             _id: "column3",
-            board: "board1",
+            board: "board3",
             columnName: "Done",
             columnOrder: 3,
         },
