@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className + " bg-[#252729]"}>
+      <body className={inter.className + " bg-[#252729] flex flex-col justify-between"}>
         <StoreProvider>
           <AuthProvider session={session}>
             {children}

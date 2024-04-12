@@ -16,10 +16,10 @@ const ModalConfirm = ({ onDelete, onClose }: { onDelete: MouseEventHandler, onCl
                 </div>
 
                 <div className="p-6 pt-0 text-center">
-                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Are you sure you want to delete this user?</h3>
+                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Are you sure you want to delete this Task?</h3>
                     <button
                         className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2"
-                    onClick={onDelete}>
+                        onClick={onDelete}>
                         Yes, I'm sure
                     </button>
                     <button

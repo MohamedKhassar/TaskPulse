@@ -64,7 +64,7 @@ function page() {
 
 
     return (
-        <div className='p-10 flex flex-col gap-y-5'>
+        <div className='p-10 flex flex-col gap-y-5 h-screen'>
             {/* <div className={cn("hidden items-center justify-center absolute w-full h-full backdrop-blur-xl bg-black/5 z-20", loading && "flex")}>
                 <LoaderCircle size={50} className="animate-spin" color="#7A54CC" />
             </div> */}

@@ -27,7 +27,7 @@ const NavBar = () => {
     const [loading, setLoading] = useState(false)
 
     return (
-        <div className={cn('relative top-0 flex items-center justify-between py-1 px-14 bg-[#1A1C1E] text-[#EEEEEE] mb-6',
+        <div className={cn('relative top-0 flex items-center justify-between py-1 lg:px-14 px-10 bg-[#1A1C1E] text-[#EEEEEE] mb-6',
             authRoutes.includes(pathname) && 'hidden'
         )}>
             <div className='flex gap-x-4 items-center'>
@@ -56,7 +56,7 @@ const NavBar = () => {
                                 height="100"
                                 className="rounded-full cursor-pointer w-14" alt='' />
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className='w-56 bg-[#191C2E] text-white border-gray-500'>
+                        <DropdownMenuContent className='lg:w-56 -translate-x-8 bg-[#191C2E] text-white border-gray-500'>
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
@@ -69,8 +69,8 @@ const NavBar = () => {
                 :
                 <div className='flex gap-x-5 items-center'>
                     {/* ------------------------when user not login---------------------------------------- */}
-                    <button onClick={() => router.push("/login")} className='capitalize hover:text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg w-20 duration-300 hover:bg-[#7A54CC] text-[#a27cf5]'>Sign In</button>
-                    <button onClick={() => router.push("/register")} className='capitalize text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg w-20 duration-300 hover:bg-transparent bg-[#7A54CC] hover:text-[#a27cf5]'>register</button>
+                    <button onClick={() => router.push("/login")} className='capitalize hover:text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg lg:w-20 w-16 duration-300 hover:bg-[#7A54CC] text-[#a27cf5]'>Sign In</button>
+                    <button onClick={() => router.push("/register")} className='lg:block hidden capitalize text-[#1f0c47] border border-[#6842bc] p-1 rounded-lg w-20 duration-300 hover:bg-transparent bg-[#7A54CC] hover:text-[#a27cf5]'>register</button>
                 </div>
             }
         </div >

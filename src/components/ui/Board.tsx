@@ -40,7 +40,7 @@ const Board = ({ children, column, projectId }: { children: ReactNode, column: T
             "rounded-lg p-3 bg-[#000000]/70 flex flex-col gap-y-5 border-t-[7px] capitalize")}
         >
             <h1 className='text-white text-lg w-fit'>{column}</h1>
-            <div className='overflow-y-scroll flex flex-col gap-y-5 h-fit max-h-80 min-h-fit min-w-56 scroll p-3'>
+            <div className='overflow-y-scroll flex flex-col gap-y-5 h-fit max-h-80 min-h-fit lg:min-w-64 min-w-56 scroll p-3'>
                 {children}
                 <form action="" className='my-2 flex flex-col gap-y-3 items-end' onSubmit={handleAddTask}>
 

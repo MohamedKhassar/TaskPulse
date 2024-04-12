@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 export default function page() {
   const router = useRouter()
   return (
-    <div className="sm:flex justify-between items-center w-full">
+    <div className="sm:flex justify-between items-center w-full h-[80.8vh]">
       <div className="sm:w-1/2 p-10">
         <div className="image object-center text-center">
           <Image src="https://i.imgur.com/WbQnbas.png" width={500} height={500} alt='' />

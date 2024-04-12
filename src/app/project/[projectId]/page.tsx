@@ -54,11 +54,11 @@ export default function page({ params }: { params: { projectId: string } }) {
     fetchProject()
   }, [])
   return (
-    <div className='flex flex-col justify-center items-center h-[90vh]'>
-      <div className='h-1/6'>
+    <div className='flex flex-col justify-center items-center h-screen lg:gap-y-5 gap-y-10 lg:h-[90vh]'>
+      <div className='h-1/6 lg:mt-2 mt-8'>
         <h1 className='text-6xl font-body font-bold text-[#7A54CC]'>{projects?.title}</h1>
       </div>
-      <div className='lg:flex lg:flex-row flex-col lg:gap-x-5 gap-y-5 justify-center items-start'>
+      <div className="flex lg:flex-row lg:gap-x-36 flex-col gap-y-8">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCorners}
