@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import User from "@/Models/userModel";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -66,7 +66,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/",
   }
-}
+} as NextAuthOptions
 
 const handler = NextAuth(authOptions);
 

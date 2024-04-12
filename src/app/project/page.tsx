@@ -11,11 +11,17 @@ import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store/store'
+import { InitialProject } from '@/types/ReduxType'
+import { useDispatch } from 'react-redux'
+import { deleteProjectById, fetchAllProjects } from '@/store/project/projectThunk'
 function page() {
     const [isClose, setIsClose] = useState(false)
-    const [projects, setProjects] = useState<Project[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
     const [deletedId, setDeletedId] = useState<string>()
+    const dispatch = useDispatch<AppDispatch>()
+    const projects = useSelector((state: RootState) => state.projectSlice.projects) as Project[]
+
     const router = useRouter()
     const handelAlert = (id: string) => {
         setDeletedId(id)
@@ -25,9 +31,9 @@ function page() {
 
     const confirmDelete = async () => {
         try {
-            setIsClose(false)
-            setLoading(true)
-            await axios.delete(`http://localhost:3000/api/projects/${deletedId}`).then(() => setLoading(false));
+            if (deletedId) {
+                await dispatch(deleteProjectById(deletedId)).then(() => setIsClose(false))
+            }
             fetchData()
         } catch (error) {
             console.log(error)
@@ -36,15 +42,14 @@ function page() {
 
     const fetchData = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/api/projects");
-            res.data && (setProjects(res.data))
+            await dispatch(fetchAllProjects())
         } catch (error) {
             console.log(error)
         }
     }
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [dispatch])
     function percentage(partialValue: Task[], totalValue: Task[]): number {
         // Check if either array is empty
         if (totalValue.length === 0 || partialValue.length === 0) {
@@ -57,18 +62,19 @@ function page() {
         return percentage;
     }
 
+
     return (
-        <div className='p-10'>
-            <div className={cn("hidden items-center justify-center absolute w-full h-full backdrop-blur-xl bg-black/5 z-20", loading && "flex")}>
+        <div className='p-10 flex flex-col gap-y-5'>
+            {/* <div className={cn("hidden items-center justify-center absolute w-full h-full backdrop-blur-xl bg-black/5 z-20", loading && "flex")}>
                 <LoaderCircle size={50} className="animate-spin" color="#7A54CC" />
-            </div>
+            </div> */}
             <div className='flex items-center gap-x-5'>
                 <h1 className='font-body text-4xl capitalize text-[#7A54CC]'>my projects</h1>
                 <Image className='size-12' src={project} alt='' />
             </div>
-            <div className="flex items-center justify-center h-[70vh]">
+            <div className="flex items-center justify-center">
                 <div className="w-full">
-                    <div className="overflow-auto lg:overflow-visible ">
+                    <div className="overflow-auto lg:overflow-visible flex flex-col gap-y-6">
                         <Form />
                         <table className="table text-[#7A54CC] border-separate space-y-6 text-md w-full text-center font-body">
                             <thead className="bg-gray-800 text-gray-500 text-center capitalize">
@@ -80,7 +86,7 @@ function page() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {projects ? projects.map(project => (
+                                {Array.isArray(projects) ? projects.map(project => (
                                     <tr key={project._id} className="bg-gray-800 hover:underline">
                                         <td className="p-3 hover:underline cursor-pointer" onClick={() => router.push(`project/${project._id}`)}>
                                             {project.title}
@@ -123,7 +129,7 @@ function page() {
                                         </td>
                                     </tr>
                                 ))
-                                    : "not found"}</tbody>
+                                    : <tr><td className="p-3">not found</td></tr>}</tbody>
                         </table>
                     </div>
                 </div>

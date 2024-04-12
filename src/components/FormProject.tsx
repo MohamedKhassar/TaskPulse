@@ -1,26 +1,35 @@
+import { createProject, fetchAllProjects } from '@/store/project/projectThunk';
+import { AppDispatch } from '@/store/store';
+import { Project } from '@/types/SchemasTypes';
 import axios from 'axios';
 import { Plus } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { FormEvent, MouseEventHandler, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Form = ({ onCreate }: { onCreate?: MouseEventHandler }) => {
   const { data: user } = useSession()
   const [title, setTitle] = useState('');
   const [members, setMembers] = useState([]);
   const [member, setMember] = useState("");
-  const [showForm, setShowForm] = useState(false); // State to control form visibility
+  const [showForm, setShowForm] = useState(false);
+  const dispatch = useDispatch<AppDispatch>()
 
 
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
-      await axios.post("/api/projects", { title, members, userId: user?.user.id }).then(() => {
-        setTitle("")
-        setMembers([])
-        setShowForm(false)
-        setMember("")
+      if (user?.user.id) {
+        await dispatch(createProject({ title, members, userId: user?.user.id })).then(() => {
+          setTitle("")
+          setMembers([])
+          setShowForm(false)
+          setMember("")
+        }
+        ).then(async () => {
+          await dispatch(fetchAllProjects())
+        })
       }
-      )
     } catch (error) {
 
     }
