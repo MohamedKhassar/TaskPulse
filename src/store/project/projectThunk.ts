@@ -30,7 +30,7 @@ export const fetchAllProjects = createAsyncThunk(
     'projects/fetchAll',
     async (_, thunkAPI) => {
         try {
-            const response = await axios.get("${process.env.BASE_URL}/api/projects");
+            const response = await axios.get(`${process.env.BASE_URL}/api/projects`);
             return response.data;
         } catch (error) {
             const message = (error as Error).message
