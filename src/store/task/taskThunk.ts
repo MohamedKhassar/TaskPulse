@@ -6,7 +6,7 @@ export const deleteTaskById = createAsyncThunk(
     'tasks/deleteById',
     async (taskId: string, thunkAPI) => {
         try {
-            await axios.delete(`https://task-pulse-rho.vercel.app/api/task/${taskId}`);
+            await axios.delete(`${process.env.BASE_URL}/api/task/${taskId}`);
             return taskId;
         } catch (error) {
             const message = (error as Error).message
@@ -19,7 +19,7 @@ export const updateTask = createAsyncThunk(
     'tasks/update',
     async ({ taskId, taskUpdate }: { taskId: string, taskUpdate: Task }, thunkAPI) => {
         try {
-            const response = await axios.put(`https://task-pulse-rho.vercel.app/api/task/${taskId}`, taskUpdate);
+            const response = await axios.put(`${process.env.BASE_URL}/api/task/${taskId}`, taskUpdate);
             return response.data;
         } catch (error) {
             const message = (error as Error).message
