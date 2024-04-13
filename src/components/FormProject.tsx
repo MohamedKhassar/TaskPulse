@@ -7,11 +7,11 @@ import { useSession } from 'next-auth/react';
 import React, { FormEvent, MouseEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const Form = ({ onCreate }: { onCreate?: MouseEventHandler }) => {
-  const { data: user } = useSession()
-  const [title, setTitle] = useState('');
-  const [members, setMembers] = useState([]);
-  const [member, setMember] = useState("");
+const Form = () => {
+
+  const [projectData, setProjectData] = useState({
+    title: ""
+  });
   const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch<AppDispatch>()
 
@@ -19,19 +19,19 @@ const Form = ({ onCreate }: { onCreate?: MouseEventHandler }) => {
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
-      if (user?.user.id) {
-        await dispatch(createProject({ title, members, userId: user?.user.id })).then(() => {
-          setTitle("")
-          setMembers([])
-          setShowForm(false)
-          setMember("")
-        }
-        ).then(async () => {
-          await dispatch(fetchAllProjects())
+      await dispatch(createProject({ title: projectData.title })).then(() => {
+        setProjectData({
+          ...projectData,
+          title: ""
         })
+        setShowForm(false)
       }
-    } catch (error) {
-
+      ).then(async () => {
+        await dispatch(fetchAllProjects())
+      })
+    }
+    catch (error) {
+      console.log(error)
     }
   };
 
@@ -53,20 +53,9 @@ const Form = ({ onCreate }: { onCreate?: MouseEventHandler }) => {
                 <input
                   type="text"
                   id="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={projectData.title}
+                  onChange={(e) => setProjectData({ ...projectData, title: e.target.value })}
                   placeholder="Enter Project title"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="members" className="block text-gray-700 font-bold mb-2">Members</label>
-                <input
-                  type="text"
-                  id="members"
-                  value={members}
-                  onChange={(e) => setMember(e.target.value)}
-                  placeholder="Enter members"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                 />
               </div>

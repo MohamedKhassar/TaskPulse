@@ -41,9 +41,20 @@ export const fetchAllProjects = createAsyncThunk(
 
 export const createProject = createAsyncThunk(
     'projects/create',
-    async ({ title, members, userId }: Project, thunkAPI) => {
+    async ({ title }: Pick<Project, "title">, thunkAPI) => {
         try {
-            await axios.post(`/api/projects`, { title, members, userId });
+            await axios.post(`/api/projects`, { title });
+        } catch (error) {
+            const message = (error as Error).message
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+export const updateProjectById = createAsyncThunk(
+    'projects/update',
+    async ({ title, _id, members }: Pick<Project, "title" | "_id" | "members">, thunkAPI) => {
+        try {
+            await axios.put(`/api/projects/${_id}`, { title, members });
         } catch (error) {
             const message = (error as Error).message
             return thunkAPI.rejectWithValue(message);

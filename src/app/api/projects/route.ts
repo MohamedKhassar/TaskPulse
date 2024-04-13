@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import "@/lib/mongodb"
-import TaskModel from "@/Models/taskModel"
 import ProjectModel from "@/Models/projectModel"
 import { getToken } from "next-auth/jwt"
 export const GET = async (req: NextRequest, params: { userId: string }) => {
@@ -15,10 +14,12 @@ export const GET = async (req: NextRequest, params: { userId: string }) => {
 
 export const POST = async (req: NextRequest) => {
     try {
-        const { title, members, userId, tasks } = await req.json()
-        await ProjectModel.create({ title, userId, $push: { members, tasks } })
+        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+        const { title, members, tasks } = await req.json()
+        await ProjectModel.create({ title, userId: token?.sub, $push: { members, tasks } })
         return NextResponse.json({ message: "Data has been submitted!" });
     } catch (error) {
         console.log(error)
     }
 }
+

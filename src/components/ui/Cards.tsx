@@ -30,9 +30,9 @@ const Cards = ({ task, projectId }: { task: Task, projectId: string }) => {
 
     const confirmDelete = async () => {
         try {
-            setIsClose({ ...isClose, delete: false })
+
             await dispatch(deleteTaskById(task._id)).then(async () => {
-                await dispatch(fetchProjectById(projectId))
+                await dispatch(fetchProjectById(projectId)).then(() => setIsClose({ ...isClose, delete: false }))
             })
         } catch (error) {
             console.log(error)

@@ -3,10 +3,10 @@ import mongoose from "mongoose"
 export type Project = {
     _id: string,
     title: string
-    userId: User
+    userId: User | undefined
     column: string[],
     tasks: Task[] | undefined,
-    members: string[] | undefined
+    members: User[] | undefined
 }
 
 export type Task = {

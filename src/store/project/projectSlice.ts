@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createProject, deleteProjectById, fetchAllProjects, fetchProjectById } from './projectThunk';
+import { createProject, createTaskInProject, deleteProjectById, fetchAllProjects, fetchProjectById, updateProjectById } from './projectThunk';
 import { InitialProject } from '@/types/ReduxType';
-import { Project } from "../../types/SchemasTypes"
 
 
 const initialState: InitialProject = {
@@ -58,7 +57,27 @@ const projectSlice = createSlice({
             .addCase(createProject.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error;
-            });
+            })
+            .addCase(createTaskInProject.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(createTaskInProject.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(createTaskInProject.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error;
+            })
+            .addCase(updateProjectById.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(updateProjectById.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(updateProjectById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error;
+            })
     },
 });
 

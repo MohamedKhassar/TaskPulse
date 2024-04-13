@@ -2,23 +2,22 @@
 import Image from 'next/image'
 import React, { use, useEffect, useState } from 'react'
 import project from "../../../public/images/project.png"
-import { LoaderCircle, Pen, Trash2 } from 'lucide-react'
+import { Pen, Trash2 } from 'lucide-react'
 import ModalConfirm from '@/components/DeleteAlert'
 import Form from '@/components/FormProject'
-import axios from 'axios'
 import { Project, Task, TaskStatus } from '@/types/SchemasTypes'
-import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store/store'
-import { InitialProject } from '@/types/ReduxType'
 import { useDispatch } from 'react-redux'
 import { deleteProjectById, fetchAllProjects } from '@/store/project/projectThunk'
+import Update from '@/components/UpdateProject'
 function page() {
     const [isClose, setIsClose] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(false)
     const [deletedId, setDeletedId] = useState<string>()
+    const [updatedId, setUpdatedId] = useState<string>()
     const dispatch = useDispatch<AppDispatch>()
     const projects = useSelector((state: RootState) => state.projectSlice.projects) as Project[]
 
@@ -26,6 +25,9 @@ function page() {
     const handelAlert = (id: string) => {
         setDeletedId(id)
         setIsClose(!isClose)
+    }
+    const handelUpdate = (id: string) => {
+        setIsUpdate(!isUpdate)
     }
 
 
@@ -92,7 +94,7 @@ function page() {
                                             {project.title}
                                         </td>
                                         <td className="p-3 font-bold capitalize cursor-pointer" onClick={() => router.push(`project/${project._id}`)}>
-                                            {project.userId.name}
+                                            {project?.userId?.name}
                                         </td>
                                         <td className="p-3">
                                             <div className="relative p-4 max-w-sm mx-auto">
@@ -119,7 +121,7 @@ function page() {
                                         </td>
                                         <td className="p-3">
                                             <div className='flex gap-x-6 items-center justify-center'>
-                                                <button className="inline-flex items-center px-4 py-2 bg-yellow-600/70 hover:bg-yellow-700/70 text-white text-sm font-medium rounded-md">
+                                                <button className="inline-flex items-center px-4 py-2 bg-yellow-600/70 hover:bg-yellow-700/70 text-white text-sm font-medium rounded-md" onClick={() => handelUpdate(project._id)}>
                                                     <Pen size={15} className='text-yellow-400' />
                                                 </button>
                                                 <button className="inline-flex items-center px-4 py-2 bg-red-600/70 hover:bg-red-700/70 text-white text-sm font-medium rounded-md" onClick={() => handelAlert(project._id)}>
@@ -127,15 +129,16 @@ function page() {
                                                 </button>
                                             </div>
                                         </td>
+                                        {isUpdate && <Update project={project} onClose={() => handelUpdate("")} />}
                                     </tr>
                                 ))
-                                    : <tr><td className="p-3">not found</td></tr>}</tbody>
+                                    : <tr className='col-span-4'><td className="p-3">not found</td></tr>}</tbody>
                         </table>
                     </div>
                 </div>
             </div>
             {isClose && <ModalConfirm onClose={() => handelAlert("")} onDelete={confirmDelete} />}
-        </div>
+        </div >
     )
 }
 

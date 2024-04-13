@@ -16,7 +16,6 @@ export const DELETE = async (req: NextApiRequest, { params }: { params: { taskId
 export const PUT = async (req: NextRequest, { params }: { params: { taskId: string } }) => {
     try {
         const data = await req.json()
-        console.log("object")
         await TaskModel.findByIdAndUpdate(params.taskId, data)
         return NextResponse.json("project")
     } catch (error) {

@@ -10,7 +10,7 @@ import React, { ChangeEvent, FormEvent, FormEventHandler, MouseEventHandler } fr
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-const FormTask = ({ onClose, task, projectId }: { onClose: MouseEventHandler, task: Task, projectId: string }) => {
+const FormTask = ({ onClose, task, projectId }: { onClose: (arg?: any) => void, task: Task, projectId: string }) => {
     const [taskData, setTaskData] = useState(task);
     const dispatch = useDispatch<AppDispatch>()
 
@@ -27,18 +27,19 @@ const FormTask = ({ onClose, task, projectId }: { onClose: MouseEventHandler, ta
             e.preventDefault()
             await dispatch(updateTask({ taskId: task._id, taskUpdate: taskData })).then(async () => {
                 await dispatch(fetchProjectById(projectId))
-            })
+            }).then(() => onClose())
         } catch (error) {
             console.log(error)
         }
     }
+
 
     return (
         <div className="fixed inset-0 overflow-y-auto z-40 backdrop-blur-md bg-black/10">
             <div className="flex items-center justify-center h-full">
                 <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
                     <div className="flex justify-end p-2 items-center">
-                        <h1 className="text-xl font-semibold mb-4">Create Task</h1>
+                        <h1 className="text-xl font-semibold mb-4 capitalize">update Task</h1>
                         <button
                             type="button"
                             onClick={onClose}
