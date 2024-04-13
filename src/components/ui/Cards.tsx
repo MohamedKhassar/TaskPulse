@@ -98,7 +98,8 @@ const Cards = ({ task, projectId }: { task: Task, projectId: string }) => {
             <div className='flex flex-col justify-between'>
                 <div className='flex gap-x-2'>
                     <button className='bg-[#845ADF]/10 hover:bg-[#845ADF]/40 duration-300 rounded-lg p-2' onClick={() => setIsClose({ ...isClose, formUpdate: true })}><Pen className='size-3' color='#845ADF' /></button>
-                    <button className='bg-[#E6533C]/10 hover:bg-[#E6533C]/40 duration-300 rounded-lg p-2' onClick={() => setIsClose({ ...isClose, delete: true })}><Trash className='size-3' color='#E6533C' /></button>
+                    <button
+                        data-testid="delete-button" className='bg-[#E6533C]/10 hover:bg-[#E6533C]/40 duration-300 rounded-lg p-2' onClick={() => setIsClose({ ...isClose, delete: true })}><Trash className='size-3' color='#E6533C' /></button>
                 </div>
                 <div className='flex justify-end relative' onClick={() => setShowPriority(!showPriority)}>
                     <h1 className={`${taskUpdate.priority == TaskPriority.Medium ? "bg-[#F5B849]/10 hover:bg-[#F5B849]/40 text-[#F5B849]" : taskUpdate.priority == TaskPriority.High ? "bg-[#E6533C]/10 hover:bg-[#E6533C]/40 text-[#E6533C]" : "bg-[#26BF94]/10 hover:bg-[#26BF94]/40 text-[#26BF94]"}  w-fit py-1 px-2 text-center font-semibold rounded-[4px] text-[11px] duration-300 capitalize`}>{taskUpdate.priority}</h1>

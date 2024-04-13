@@ -20,15 +20,13 @@ const Board = ({ children, column, projectId }: { children: ReactNode, column: T
         try {
             e.preventDefault()
             if (taskData.taskName) {
-                await dispatch(createTaskInProject({ projectId, taskName: taskData.taskName, status: taskData.status })).then(async () => {
-
-                    await dispatch(fetchProjectById(projectId))
-                }).then(() => {
-                    setTaskData({
-                        taskName: "",
-                        status: TaskStatus.ToDo
-                    })
+                await dispatch(createTaskInProject({ projectId, taskName: taskData.taskName, status: taskData.status }))
+                await dispatch(fetchProjectById(projectId))
+                setTaskData({
+                    taskName: "",
+                    status: TaskStatus.ToDo
                 })
+
             }
         } catch (error) {
             console.log(error)
