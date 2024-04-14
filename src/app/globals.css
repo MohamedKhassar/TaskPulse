@@ -6,19 +6,21 @@
 @import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
 .scroll::-webkit-scrollbar,body::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
   }
   
   /* Track */
-  .scroll::-webkit-scrollbar,body::-webkit-scrollbar-track {
+  .scroll::-webkit-scrollbar-track,body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
+    height: 1px;
 }
    
-  .scroll::-webkit-scrollbar,body::-webkit-scrollbar-thumb {
+  .scroll::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: transparent;
     border: solid rgb(88, 88, 88);
