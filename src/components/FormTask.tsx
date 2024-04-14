@@ -2,7 +2,6 @@ import { fetchProjectById } from '@/store/project/projectThunk';
 import { AppDispatch } from '@/store/store';
 import { updateTask } from '@/store/task/taskThunk';
 import { Task, TaskPriority, TaskStatus } from '@/types/SchemasTypes';
-import axios from 'axios';
 import { CircleX } from 'lucide-react';
 import React, { ChangeEvent, FormEvent, FormEventHandler, MouseEventHandler } from 'react'
 

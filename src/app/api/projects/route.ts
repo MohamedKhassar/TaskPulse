@@ -9,6 +9,7 @@ export const GET = async (req: NextRequest, params: { userId: string }) => {
         return NextResponse.json(projects)
     } catch (error) {
         console.log(error)
+        return NextResponse.json(error)
     }
 }
 
@@ -19,7 +20,7 @@ export const POST = async (req: NextRequest) => {
         await ProjectModel.create({ title, userId: token?.sub, $push: { members, tasks } })
         return NextResponse.json({ message: "Data has been submitted!" });
     } catch (error) {
-        console.log(error)
+        return NextResponse.json(error)
     }
 }
 

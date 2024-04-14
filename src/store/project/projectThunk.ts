@@ -46,6 +46,7 @@ export const createProject = createAsyncThunk(
             await axios.post(`/api/projects`, { title });
         } catch (error) {
             const message = (error as Error).message
+            console.log(message)
             return thunkAPI.rejectWithValue(message);
         }
     }

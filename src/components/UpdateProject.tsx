@@ -1,7 +1,6 @@
 import { createProject, fetchAllProjects, updateProjectById } from '@/store/project/projectThunk';
 import { AppDispatch } from '@/store/store';
 import { Project } from '@/types/SchemasTypes';
-import { Plus, PlusSquare } from 'lucide-react';
 import React, { FormEvent, MouseEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 

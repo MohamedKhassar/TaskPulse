@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# TaskPulse
 
-First, run the development server:
+TaskPulse is a modern task management application designed to help users organize their tasks efficiently. Built with Next.js, TypeScript, Tailwind CSS, and MongoDB, TaskPulse offers a seamless user experience with a focus on simplicity and productivity.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Environment Variables
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Before running the app, make sure to set up the following environment variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `DB` : The connection URI for MongoDB.
+- `NEXTAUTH_SECRET` : Secret key for NextAuth.js authentication.
+- `NEXTAUTH_URL` : Base URL for NextAuth.js authentication.
+- `BASE_URL` : Base URL for the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+You can set these in a `.env` file in the root directory **(example)**:
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+* `DB` = mongodb://localhost:27017/taskpulse 
+* `NEXTAUTH_SECRET` = my-nextauth-secret
+* `NEXTAUTH_URL` = http://localhost:3000
+* `BASE_URL` = http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Replace the values with appropriate configurations for your application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Usage
 
-## Deploy on Vercel
+* Installation:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    To install dependencies run :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    `npm i` **or** `yarn`
+
+* Run The App With :
+    
+    `npm run dev` **or** `yarn dev`
+    
+    Then Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+* Testing
+
+    To run tests:
+    `npm run test` **or** `yarn test`
+
+
+
+
+## Features
+
+- [✔] Authentication (Sign up, Sign in, Sign out)
+- [✔] Task creation, editing, deletion
+- [✔] User-specific tasks
+- [✔] Dashboard for task overview
+- [✔] Responsive design
+
