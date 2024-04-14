@@ -1,13 +1,15 @@
 import { fetchProjectById } from '@/store/project/projectThunk';
-import { AppDispatch } from '@/store/store';
+import { AppDispatch, RootState } from '@/store/store';
 import { updateTask } from '@/store/task/taskThunk';
-import { Task, TaskPriority, TaskStatus } from '@/types/SchemasTypes';
+import { Project, Task, TaskPriority, TaskStatus } from '@/types/SchemasTypes';
 import { CircleX } from 'lucide-react';
 import React, { ChangeEvent, FormEvent, FormEventHandler, MouseEventHandler } from 'react'
 
 
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const FormTask = ({ onClose, task, projectId }: { onClose: (arg?: any) => void, task: Task, projectId: string }) => {
     const [taskData, setTaskData] = useState(task);
@@ -24,9 +26,10 @@ const FormTask = ({ onClose, task, projectId }: { onClose: (arg?: any) => void, 
     const handelUpdate = async (e: FormEvent) => {
         try {
             e.preventDefault()
-            await dispatch(updateTask({ taskId: task._id, taskUpdate: taskData })).then(async () => {
-                await dispatch(fetchProjectById(projectId))
-            }).then(() => onClose())
+            await dispatch(updateTask({ taskId: task._id, taskUpdate: taskData }))
+            setTaskData(
+                (await dispatch(fetchProjectById(projectId))).payload)
+            onClose()
         } catch (error) {
             console.log(error)
         }

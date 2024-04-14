@@ -1,26 +1,32 @@
-import { createProject, fetchAllProjects, updateProjectById } from '@/store/project/projectThunk';
-import { AppDispatch } from '@/store/store';
+import { createProject, fetchAllProjects, fetchProjectById, updateProjectById } from '@/store/project/projectThunk';
+import { AppDispatch, RootState } from '@/store/store';
+import { InitialProject } from '@/types/ReduxType';
 import { Project } from '@/types/SchemasTypes';
-import React, { FormEvent, MouseEventHandler, useState } from 'react';
+import React, { FormEvent, MouseEventHandler, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-const Update = ({ project, onClose }: { project: Project, onClose: MouseEventHandler }) => {
-    const [projectData, setProjectData] = useState(project);
+const Update = ({ projectId, onClose }: { projectId: string, onClose: (arg?: any) => void }) => {
+
+    const { projects } = useSelector((state: RootState) => state.projectSlice)
+    const filteredProject = projects?.find((project: Project) => project._id === projectId)
+    const [projectData, setProjectData] = useState<Project>(filteredProject);
     const [member, setMember] = useState("")
     const dispatch = useDispatch<AppDispatch>()
-
 
     const handleSubmit = async (e: FormEvent) => {
         try {
             e.preventDefault();
             await dispatch(updateProjectById({ _id: projectData._id, members: projectData.members, title: projectData.title })).then(async () => {
-                await dispatch(fetchAllProjects())
+                await dispatch(fetchAllProjects()).then(() => onClose())
             })
-
+            toast.success("project data updated successfully")
         } catch (error) {
 
         }
     };
+
     return (
         <div>
             <div className="font-body fixed z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4">
@@ -68,6 +74,7 @@ const Update = ({ project, onClose }: { project: Project, onClose: MouseEventHan
                             </button>
                             <button
                                 className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center"
+                                type='button'
                                 onClick={onClose}
                             >
                                 No, cancel

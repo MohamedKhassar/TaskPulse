@@ -21,14 +21,10 @@ export default function page() {
         </div>
         <div className="sm:w-1/2 p-5 flex justify-center items-center">
           <div className="text w-full h-full">
-            <span className="text-4xl font-body text-gray-500 border-b-2 border-indigo-600 uppercase">About us</span>
-            <h2 className="font-body text-white my-4 font-bold text-3xl  sm:text-xl ">About <span className="text-indigo-600">Our Company</span>
+            <h2 className="font-body mb-5 text-white font-bold lg:text-6xl  text-xl underline underline-offset-[15px] decoration-indigo-600">About <span className="text-indigo-600">Our Company</span>
             </h2>
-            <p className="text-gray-700 font-body text-xl w-2/3">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, commodi
-              doloremque, fugiat illum magni minus nisi nulla numquam obcaecati placeat quia, repellat tempore
-              voluptatum.
-            </p>
+            <p className="text-gray-700 font-body text-xl w-4/5">
+              With TaskPulse, you can organize, track, and collaborate on all your tasks in one place. Whether you're a development team or an independent professional, our application enables you to stay productive and focused on what really matters. Join us today to revolutionize the way you manage your projects!            </p>
             <button onClick={() => router.push('/project')} className="mt-8 bg-blue-600 hover:bg-blue-400 rounded py-3 px-6 shadow-lg text-white font-body">my project</button>
           </div>
         </div>

@@ -10,6 +10,7 @@ import React, { FormEvent, ReactNode, useState } from 'react'
 import { motion } from "framer-motion";
 
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 const Board = ({ children, column, projectId }: { children: ReactNode, column: TaskStatus, projectId: string }) => {
     const [taskData, setTaskData] = useState({
@@ -28,6 +29,7 @@ const Board = ({ children, column, projectId }: { children: ReactNode, column: T
                     taskName: "",
                     status: TaskStatus.ToDo
                 })
+                toast.success("Task created successfully")
 
             }
         } catch (error) {

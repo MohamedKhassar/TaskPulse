@@ -22,3 +22,12 @@ export const PUT = async (req: NextRequest, { params }: { params: { taskId: stri
         console.log(error)
     }
 }
+export const GET = async (req: NextRequest, { params }: { params: { taskId: string } }) => {
+    try {
+        const task = await TaskModel.findByIdAndUpdate(params.taskId)
+        return NextResponse.json(task)
+    } catch (error) {
+        console.log(error)
+    }
+}
+

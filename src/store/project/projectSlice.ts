@@ -4,7 +4,7 @@ import { InitialProject } from '@/types/ReduxType';
 
 
 const initialState: InitialProject = {
-    projects: [],
+    projects: null,
     loading: false,
     error: null,
 };

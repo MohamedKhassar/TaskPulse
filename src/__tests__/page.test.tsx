@@ -5,12 +5,10 @@ import Cards from '@/components/ui/Cards';
 import { TaskStatus, TaskPriority, Task } from '@/types/SchemasTypes';
 import ModalConfirm from '@/components/DeleteAlert';
 
-// Mocking the useDispatch hook
 jest.mock('react-redux', () => ({
     useDispatch: () => jest.fn(),
 }));
 
-// Mocking axios
 jest.mock('axios');
 
 describe('Board, Cards, and ModalConfirm Components', () => {

@@ -22,7 +22,7 @@ function page() {
     const [deletedId, setDeletedId] = useState<string>()
     const [updatedId, setUpdatedId] = useState<string>()
     const dispatch = useDispatch<AppDispatch>()
-    const projects = useSelector((state: RootState) => state.projectSlice.projects) as Project[]
+    const projects = useSelector((state: RootState) => state.projectSlice.projects)
 
     const router = useRouter()
     const handelAlert = (id: string) => {
@@ -31,6 +31,7 @@ function page() {
     }
     const handelUpdate = (id: string) => {
         setIsUpdate(!isUpdate)
+        setUpdatedId(id)
     }
 
 
@@ -109,20 +110,20 @@ function page() {
                                                         <div className="relative p-4 max-w-sm mx-auto">
                                                             <div className="flex mb-2 items-center justify-between">
                                                                 <div className="text-right">
-                                                                    <span className={cn(`w-[${project.tasks && percentage(project.tasks.filter(task => task.status === TaskStatus.Done), project.tasks)}%] rounded-full text-xs font-semibold inline-block`, {
-                                                                        'text-red-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 0 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) < 25,
-                                                                        'text-yellow-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 25 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) < 75,
-                                                                        'text-green-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 75 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) <= 100,
+                                                                    <span className={cn(`w-[${project.tasks && percentage(project.tasks.filter((task: Task) => task.status === TaskStatus.Done), project.tasks)}%] rounded-full text-xs font-semibold inline-block`, {
+                                                                        'text-red-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 0 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) < 25,
+                                                                        'text-yellow-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 25 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) < 75,
+                                                                        'text-green-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 75 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) <= 100,
                                                                     })}>
-                                                                        {project.tasks && percentage(project.tasks.filter(task => task.status == TaskStatus.Done), project.tasks)}%
+                                                                        {project.tasks && percentage(project.tasks.filter((task: Task) => task.status == TaskStatus.Done), project.tasks)}%
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                             <div className="flex rounded-full h-2 bg-gray-200">
-                                                                <div className={cn(`w-[${project.tasks && percentage(project.tasks.filter(task => task.status === TaskStatus.Done), project.tasks)}%] rounded-full`, {
-                                                                    'bg-red-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 0 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) < 25,
-                                                                    'bg-yellow-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 25 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) < 75,
-                                                                    'bg-green-500': percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) >= 75 && percentage(project.tasks!.filter(task => task.status === TaskStatus.Done), project.tasks!) <= 100,
+                                                                <div className={cn(`w-[${project.tasks && percentage(project.tasks.filter((task: Task) => task.status === TaskStatus.Done), project.tasks)}%] rounded-full`, {
+                                                                    'bg-red-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 0 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) < 25,
+                                                                    'bg-yellow-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 25 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) < 75,
+                                                                    'bg-green-500': percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) >= 75 && percentage(project.tasks!.filter((task: Task) => task.status === TaskStatus.Done), project.tasks!) <= 100,
                                                                 })}></div>
 
                                                             </div>
@@ -138,7 +139,6 @@ function page() {
                                                             </button>
                                                         </div>
                                                     </td>
-                                                    {isUpdate && <Update project={project} onClose={() => handelUpdate("")} />}
                                                 </tr>
                                             ))
                                                 : <tr className='col-span-4'><td className="p-3">not found</td></tr>}</tbody>
@@ -148,6 +148,7 @@ function page() {
                         </div>
                     </div>
                     {isClose && <ModalConfirm onClose={() => handelAlert("")} onDelete={confirmDelete} />}
+                    {isUpdate && updatedId && <Update projectId={updatedId} onClose={() => handelUpdate("")} />}
                 </div >
             </motion.div>
         </div>

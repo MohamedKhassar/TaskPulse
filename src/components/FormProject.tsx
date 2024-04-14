@@ -80,6 +80,7 @@ const Form = () => {
                   onClick={() => {
                     setShowForm(false)
                   }}
+                  type='button'
                 >
                   No, cancel
                 </button>

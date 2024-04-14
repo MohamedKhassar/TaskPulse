@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteTaskById, updateTask } from "./taskThunk";
+import { deleteTaskById, getTaskById, updateTask } from "./taskThunk";
 import { InitialTask } from "@/types/ReduxType";
 
 const initialState: InitialTask = {
@@ -15,6 +15,16 @@ const taskSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getTaskById.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getTaskById.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(getTaskById.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
             .addCase(deleteTaskById.pending, (state) => {
                 state.loading = true;
             })

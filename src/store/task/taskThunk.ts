@@ -7,6 +7,17 @@ export const deleteTaskById = createAsyncThunk(
     async (taskId: string, thunkAPI) => {
         try {
             await axios.delete(`/api/task/${taskId}`);
+        } catch (error) {
+            const message = (error as Error).message
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+export const getTaskById = createAsyncThunk(
+    'tasks/getById',
+    async (taskId: string, thunkAPI) => {
+        try {
+            await axios.get(`/api/task/${taskId}`);
             return taskId;
         } catch (error) {
             const message = (error as Error).message

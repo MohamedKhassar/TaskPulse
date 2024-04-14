@@ -1,5 +1,5 @@
 import { Pen, Star, Trash, User, UserPlus } from 'lucide-react'
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import { AnimatedTooltip } from './animated-tooltip'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -11,8 +11,9 @@ import { cn } from '@/lib/utils'
 import FormTask from '../FormTask'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/store/store'
-import { deleteTaskById, updateTask } from '@/store/task/taskThunk'
+import { deleteTaskById, getTaskById, updateTask } from '@/store/task/taskThunk'
 import { fetchProjectById } from '@/store/project/projectThunk'
+import { toast } from 'react-toastify'
 
 
 
@@ -59,6 +60,7 @@ const Cards = ({ task, projectId }: { task: Task, projectId: string }) => {
             await dispatch(updateTask({ taskId: task._id, taskUpdate })).then(async () => {
                 await dispatch(fetchProjectById(projectId)).then(() => setIsClose({ ...isClose, update: false }))
             })
+            toast.success("updated successfully")
         } catch (error) {
             console.log(error)
         }
